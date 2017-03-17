@@ -6,7 +6,6 @@ private class ApexMocksExamplesTest
 	@isTest
 	static void test_selector_Order()
 	{
-
 		IOpportunitiesSelector mockOpportunitiesSelector = (IOpportunitiesSelector)MY_MOCKS.mock(OpportunitiesSelector.class);
 		OpportunitiesSelector.setImpl(mockOpportunitiesSelector);
 
@@ -71,8 +70,6 @@ private class ApexMocksExamplesTest
 		((Fflib_ISObjectUnitOfWork) inOrder1.verify(mockUoW, MY_MOCKS.calls(1))).commitWork();
 	}
 
-
-
 	@isTest
 	static void test_UnitOfWork_order_InStrictlyWay()
 	{
@@ -91,11 +88,7 @@ private class ApexMocksExamplesTest
 		Fflib_ISObjectUnitOfWork mockUoW = (Fflib_ISObjectUnitOfWork)MY_MOCKS.mock(fflib_SObjectUnitOfWork.class);
 		ApexMocksExamples.unitOfWorkFactory.setMock(mockUoW);
 
-
-		fflib_InOrder inOrder1 = new fflib_InOrder(MY_MOCKS, new List<Object>{
-			mockUoW
-		});
-
+		fflib_InOrder inOrder1 = new fflib_InOrder(MY_MOCKS, new List<Object>{mockUoW});
 
 		ApexMocksExamples.ordering(new Set<ID>());
 
