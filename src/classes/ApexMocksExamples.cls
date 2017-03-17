@@ -41,29 +41,62 @@ public with sharing class ApexMocksExamples
 		unitOfWork.commitWork();
 	}
 
-	public static void answer(Set<Id> opportunityId)
+	public static void capturing(Set<Id> opportunityId)
 	{
-		//load opportunities
+		fflib_ISObjectUnitOfWork unitOfWork = unitOfWorkFactory.newInstance();
 
-		//load oppLines
+		//load some data
+		List<Opportunity> opportunities = OpportunitiesSelector.newInstance().selectById(new Set<Id>());
+		List<OpportunityLineItem> oppLines = OpportunityLineItemsSelector.newInstance().selectById(new Set<Id>());
+		List<Contact> contacts = ContactsSelector.newInstance().selectById(new Set<Id>());
 
-		//load contacts
+		//do something with the objects
+		List<OpportunityLineItem> newOppLines = new List<OpportunityLineItem>();
+		newOppLines.addAll(oppLines);
+		oppLines.addAll(newOppLines.clone());
 
-		//create email for contacts and update
+		List<Contact> newContacts = new List<Contact>(contacts);
+		contacts.addAll(newContacts);
 
+		//save
+
+		unitOfWork.registerDirty(oppLines);
+
+		unitOfWork.registerNew(contacts);
+
+		unitOfWork.commitWork();
 		//save contacts
 	}
 
-	public static void capture(Set<Id> opportunityId)
+	public static void answering(Set<Id> opportunityId)
 	{
-		//load opportunities
+		fflib_ISObjectUnitOfWork unitOfWork = unitOfWorkFactory.newInstance();
 
-		//load oppLines
-
-		//load contacts
+		//load some data
+		List<Opportunity> opportunities = OpportunitiesSelector.newInstance().selectById(new Set<Id>());
+		List<OpportunityLineItem> oppLines = OpportunityLineItemsSelector.newInstance().selectById(new Set<Id>());
+		List<Contact> contacts = ContactsSelector.newInstance().selectById(new Set<Id>());
 
 		//create email for contacts and update
 
-		//save contacts
+		ContactsService.sendEmailAndDoOtherStuff(new Set<Id> (), oppLines, contacts);
+
+		//save
+
+		unitOfWork.registerDirty(oppLines);
+
+		unitOfWork.commitWork();
+	}
+
+	public static void counters(Set<Id> opportunityId)
+	{
+		fflib_ISObjectUnitOfWork unitOfWork = unitOfWorkFactory.newInstance();
+		List<Opportunity> opportunities = OpportunitiesSelector.newInstance().selectById(new Set<Id>());
+
+		//create email for contacts and update
+		for(Opportunity opp : opportunities)
+		{
+			unitOfWork.registerDirty(opp);
+		}
 	}
 }

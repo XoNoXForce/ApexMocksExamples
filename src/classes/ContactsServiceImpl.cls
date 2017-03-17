@@ -4,8 +4,19 @@ public with sharing class ContactsServiceImpl implements ContactsService.API
 
 	}
 
-	public List<Contact> sendEmailAndDoOtherStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts)
+	public List<Contact> sendEmailAndDoOtherStuff(
+		Set<Id> cotactsIds,
+		List<OpportunityLineItem> oppLines,
+		List<Contact> contacts)
 	{
-		return null;
+		List<OpportunityLineItem> newOppLines = new List<OpportunityLineItem>();
+		newOppLines.addAll(oppLines);
+		oppLines.addAll(newOppLines.clone());
+
+		List<Contact> newContacts = new List<Contact>(contacts);
+
+		contacts.addAll(newContacts);
+
+		return contacts;
 	}
 }
