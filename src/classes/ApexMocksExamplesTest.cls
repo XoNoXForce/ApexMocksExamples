@@ -6,10 +6,12 @@ private class ApexMocksExamplesTest
 	@isTest
 	static void test_selector_Order()
 	{
-		IOpportunitiesSelector mockOpportunitiesSelector = (IOpportunitiesSelector)MY_MOCKS.mock(OpportunitiesSelector.class);
+		IOpportunitiesSelector mockOpportunitiesSelector =
+			(IOpportunitiesSelector)MY_MOCKS.mock(OpportunitiesSelector.class);
 		OpportunitiesSelector.setImpl(mockOpportunitiesSelector);
 
-		IOpportunityLineItemsSelector mockOpportunityLineItemsSelector = (IOpportunityLineItemsSelector)MY_MOCKS.mock(OpportunityLineItemsSelector.class);
+		IOpportunityLineItemsSelector mockOpportunityLineItemsSelector =
+			(IOpportunityLineItemsSelector)MY_MOCKS.mock(OpportunityLineItemsSelector.class);
 		OpportunityLineItemsSelector.setImpl(mockOpportunityLineItemsSelector);
 
 		IContactsSelector mockContactsSelector = (IContactsSelector)MY_MOCKS.mock(ContactsSelector.class);
@@ -23,7 +25,8 @@ private class ApexMocksExamplesTest
 		ApexMocksExamples.unitOfWorkFactory.setMock(mockUoW);
 
 
-		fflib_InOrder inOrder1 = new fflib_InOrder(MY_MOCKS, new List<Object>
+		fflib_InOrder inOrder1 =
+			new fflib_InOrder(MY_MOCKS, new List<Object>
 			{
 				mockOpportunitiesSelector, //the order of the mock instances in this list doesn't matter
 				mockOpportunityLineItemsSelector,
@@ -237,7 +240,7 @@ private class ApexMocksExamplesTest
 		MY_MOCKS.when(mockOpportunityLineItemsSelector.selectById(new Set<Id>())).thenReturn(mockLines);
 		MY_MOCKS.when(mockContactsSelector.selectById(new Set<Id>())).thenReturn(mockContacts);
 
-		MY_MOCKS.when(mockService.sendEmailAndDoOtherStuff(new Set<Id>(), mockLines, mockContacts)).thenAnswer(new MyAnswer());
+		MY_MOCKS.when(mockService.doStuff(new Set<Id>(), mockLines, mockContacts)).thenAnswer(new MyAnswer());
 
 		MY_MOCKS.stopStubbing();
 		OpportunitiesSelector.setImpl(mockOpportunitiesSelector);
@@ -351,11 +354,11 @@ private class ApexMocksExamplesTest
 			this.mocks = mocks;
 		}
 
-		public List<Contact> sendEmailAndDoOtherStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts)
+		public List<Contact> doStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts)
 		{
 			return (List<Contact>) mocks.mockNonVoidMethod(
 				this,
-				'sendEmailAndDoOtherStuff',
+				'doStuff',
 				new List<Type>
 				{
 					System.Type.forName('Set<Id>'), System.Type.forName('List<OpportunityLineItem>'), System.Type.forName('List<Contact>')

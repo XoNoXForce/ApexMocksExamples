@@ -1,10 +1,8 @@
 public with sharing class ContactsServiceImpl implements ContactsService.API
 {
-	public ContactsServiceImpl() {
+	public ContactsServiceImpl() {}
 
-	}
-
-	public List<Contact> sendEmailAndDoOtherStuff(
+	public List<Contact> doStuff(
 		Set<Id> cotactsIds,
 		List<OpportunityLineItem> oppLines,
 		List<Contact> contacts)

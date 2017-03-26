@@ -14,7 +14,6 @@ public with sharing class ApexMocksExamples
 
 	public static void ordering(Set<Id> opportunityId)
 	{
-
 		fflib_ISObjectUnitOfWork unitOfWork = unitOfWorkFactory.newInstance();
 
 		//load some data
@@ -22,11 +21,11 @@ public with sharing class ApexMocksExamples
 		List<OpportunityLineItem> oppLines = OpportunityLineItemsSelector.newInstance().selectById(new Set<Id>());
 		List<Contact> contacts = ContactsSelector.newInstance().selectById(new Set<Id>());
 
-		//create email for contacts and update
+		//process the data
 
-		ContactsService.sendEmailAndDoOtherStuff(new Set<Id> (), oppLines, contacts);
+		ContactsService.doStuff(new Set<Id> (), oppLines, contacts);
 
-		//save
+		//save it
 
 		unitOfWork.registerDirty(new Opportunity());
 
@@ -77,9 +76,9 @@ public with sharing class ApexMocksExamples
 		List<OpportunityLineItem> oppLines = OpportunityLineItemsSelector.newInstance().selectById(new Set<Id>());
 		List<Contact> contacts = ContactsSelector.newInstance().selectById(new Set<Id>());
 
-		//create email for contacts and update
+		//process the data
 
-		ContactsService.sendEmailAndDoOtherStuff(new Set<Id> (), oppLines, contacts);
+		ContactsService.doStuff(new Set<Id> (), oppLines, contacts);
 
 		//save
 
@@ -93,7 +92,7 @@ public with sharing class ApexMocksExamples
 		fflib_ISObjectUnitOfWork unitOfWork = unitOfWorkFactory.newInstance();
 		List<Opportunity> opportunities = OpportunitiesSelector.newInstance().selectById(new Set<Id>());
 
-		//create email for contacts and update
+		//process the data
 		for(Opportunity opp : opportunities)
 		{
 			unitOfWork.registerDirty(opp);

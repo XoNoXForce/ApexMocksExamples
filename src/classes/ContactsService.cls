@@ -6,7 +6,7 @@ public with sharing class ContactsService implements API
 
 	public interface API
 	{
-		List<Contact> sendEmailAndDoOtherStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts);
+		List<Contact> doStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts);
 	}
 
 	private static ContactsService.API service()
@@ -20,8 +20,8 @@ public with sharing class ContactsService implements API
 	}
 
 
-	public static List<Contact> sendEmailAndDoOtherStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts)
+	public static List<Contact> doStuff(Set<Id> cotactsIds, List<OpportunityLineItem> oppLines, List<Contact> contacts)
 	{
-		return service().sendEmailAndDoOtherStuff(cotactsIds, oppLines, contacts);
+		return service().doStuff(cotactsIds, oppLines, contacts);
 	}
 }
