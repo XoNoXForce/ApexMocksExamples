@@ -23,31 +23,57 @@
 		 </classpath>
 	</taskdef>
 
-	<target name="getfflib">
+
+
+	<!-- Deploy fflib commons -->
+	<target name="deployFflibCommon">
+
 		<delete dir="${basedir}/lib/fflibCommon"/>
 		<echo message="Cloning fflib-apex-common..."/>
 		<git:git directory="${basedir}/lib/fflibCommon" verbose="false">
 			<git:clone uri="https://github.com/financialforcedev/fflib-apex-common.git"/>
 		</git:git>
-	</target>
-
-	<!-- Deploy -->
-	<target name="deploy">
 
 		<!-- Deploy fflibCommon -->
 		<sf:deploy
-	        username="${sf.username}"
-	        password="${sf.password}"
-	        serverurl="${sf.server}"
-	        testLevel="NoTestRun"
-	        deployRoot="${basedir}/lib/fflibCommon/fflib/src"/>
+			username="${sf.username}"
+			password="${sf.password}"
+			serverurl="${sf.server}"
+			testLevel="NoTestRun"
+			deployRoot="${basedir}/lib/fflibCommon/fflib/src"/>
+	</target>
 
+	<!-- Deploy fflib commons -->
+	<target name="deployApexMocks">
+
+		<delete dir="${basedir}/lib/fflibApexMocks"/>
+		<echo message="Cloning fflib-apex-mocks..."/>
+		<git:git directory="${basedir}/lib/fflibApexMocks" verbose="false">
+			<git:clone uri="https://github.com/financialforcedev/fflib-apex-mocks.git"/>
+		</git:git>
+
+		<!-- Deploy fflibCommon -->
+		<sf:deploy
+			username="${sf.username}"
+			password="${sf.password}"
+			serverurl="${sf.server}"
+			testLevel="NoTestRun"
+			deployRoot="${basedir}/lib/fflibApexMocks/src"/>
+	</target>
+
+	<!-- Deploy -->
+	<target name="deployExamples">
 		<!-- Deploy Apex Mocks Examples -->
 		<sf:deploy
-	        username="${sf.username}"
-	        password="${sf.password}"
-	        serverurl="${sf.server}"
-	        testLevel="RunLocalTests"
-	        deployRoot="${basedir}/src"/>
+			username="${sf.username}"
+			password="${sf.password}"
+			serverurl="${sf.server}"
+			testLevel="RunLocalTests"
+			deployRoot="${basedir}/src"/>
 	</target>
+
+	<!-- Deploy -->
+	<target name="deploy" depends="deployApexMocks,deployFflibCommon,deployExamples">
+	</target>
+
 </project>
